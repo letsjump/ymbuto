@@ -1,0 +1,18 @@
+# Created by .gitignore support plugin (hsz.mobi)
+### Yii template
+.idea/*
+assets/*
+!assets/.gitignore
+protected/runtime/*
+!protected/runtime/.gitignore
+protected/data/*.db
+themes/classic/views/
+
+
+### Linux template
+*~
+
+# KDE directory preferences
+.directory
+
+
