@@ -21,6 +21,8 @@ class YmbutoController extends CController
 		$this->settings = Yii::app()->params;
 		$this->method   = strtolower($_SERVER['REQUEST_METHOD']);
 
+		$this->defaultAction = $this->method;
+
 		$this->checkRequirements();
 		$this->authenticate();
 		$this->processRequest();
@@ -33,7 +35,7 @@ class YmbutoController extends CController
 			$this->getData      = (!empty($_GET)) ? $_GET : Array();
 			$this->postData     = (!empty($_POST)) ? $_POST : Array();
 			$this->filesData    = (!empty($_FILES)) ? $_FILES : Array();
-			$this->$method();
+//			$this->$method();
 		} else {
 			$this->sendResponse(
 				405,
@@ -62,7 +64,7 @@ class YmbutoController extends CController
 				412,
 				Array(
 					'success'=>false,
-					'message'=>'Check default id and key lenght'
+					'message'=>'Check default id and key length'
 				)
 			);
 	}

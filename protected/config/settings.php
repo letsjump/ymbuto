@@ -6,7 +6,9 @@ return Array(
 		'id' => '123456',
 		'key' => 'qJcR0jteFJYJxQvRFFSjmQ',
 	),
+	'tokenLength' => 20,
 	'storageFolder'=>dirname(__FILE__)
+					.DIRECTORY_SEPARATOR.'..'
 					.DIRECTORY_SEPARATOR.'..'
 					.DIRECTORY_SEPARATOR.'storage',
 	'limits' => Array(
@@ -32,7 +34,7 @@ return Array(
 			),
 		),
 		'request' => Array(
-			// max download time validity from request in seconds
+			// max download time validity from token request in seconds
 			// 0 means unlimited
 			'downloadValidity' => 60*60,
 		),

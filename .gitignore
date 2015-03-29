@@ -7,6 +7,7 @@ protected/runtime/*
 !protected/runtime/.gitignore
 #protected/data/*.db
 themes/classic/views/
+yii-1.1.16/*
 
 
 ### Linux template
