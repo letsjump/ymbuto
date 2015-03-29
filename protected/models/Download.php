@@ -50,22 +50,6 @@ class Download extends CActiveRecord
 	}
 
 	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'id' => 'ID',
-			'request_id' => 'Request',
-			'download_date' => 'Download Date',
-			'download_ip' => 'Download Ip',
-			'client_agent' => 'Client Agent',
-			'errors' => 'Errors',
-			'filesize' => 'Filesize',
-		);
-	}
-
-	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *
 	 * Typical usecase:
@@ -79,7 +63,6 @@ class Download extends CActiveRecord
 	 */
 	public function search()
 	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
 

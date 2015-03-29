@@ -8,6 +8,7 @@
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Ymbuto',
+	'defaultController' => 'download',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
@@ -54,7 +55,7 @@ return array(
 
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
-			'errorAction'=>'site/error',
+			'errorAction'=>'download/error',
 		),
 
 		'log'=>array(
