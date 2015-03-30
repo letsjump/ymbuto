@@ -25,6 +25,12 @@ class TokenController extends YmbutoController
 		}
 	}
 
+	public function actionPost()
+	{
+		echo 23;
+		exit;
+	}
+
 	public function actionDelete()
 	{
 		if(strlen($this->getData['token']) == $this->settings['tokenLength']) {

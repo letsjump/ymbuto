@@ -2,8 +2,18 @@
 
 class DownloadController extends YmbutoController
 {
-	public function allowedActions() {
-		return 'get';
+
+	public function filters() {
+		return array('accessControl');
+	}
+
+	public function accessRules() {
+		return array(
+			array('allow', // allow authenticated users to access all actions
+				'users' => array('@'),
+			),
+			array('deny'),
+		);
 	}
 
 	public function actionGet()
@@ -30,7 +40,12 @@ class DownloadController extends YmbutoController
 		}
 	}
 
-	public function actionError () {
+	public function actionPost() {
+		echo 12;
+	}
 
+	public function actionError () {
+		Yii::app()->user->logout();
+		Yii::app()->end();
 	}
 }

@@ -13,6 +13,8 @@ class YmbutoController extends CController
 	public $postData;
 	public $filesData;
 
+	private $_identity;
+
 	/**
 	 * Initialize the whole system
 	 */
@@ -24,7 +26,7 @@ class YmbutoController extends CController
 		$this->defaultAction = $this->method;
 
 		$this->checkRequirements();
-		$this->authenticate();
+		$this->login();
 		$this->processRequest();
 		parent::init();
 	}
@@ -35,7 +37,8 @@ class YmbutoController extends CController
 			$this->getData      = (!empty($_GET)) ? $_GET : Array();
 			$this->postData     = (!empty($_POST)) ? $_POST : Array();
 			$this->filesData    = (!empty($_FILES)) ? $_FILES : Array();
-//			$this->$method();
+			//$this->$method();
+			$this->redirect ( 'token/post');
 		} else {
 			$this->sendResponse(
 				405,
@@ -53,6 +56,7 @@ class YmbutoController extends CController
 		// set the content type
 		header('Content-type: application/json');
 		echo CJSON::encode($data);
+		Yii::app()->user->logout();
 		Yii::app()->end();
 	}
 
@@ -69,22 +73,32 @@ class YmbutoController extends CController
 			);
 	}
 
-	private function authenticate ()
-	{
-		$user = (isset($_SERVER['HTTP_X_USERNAME']))
-			? $_SERVER['HTTP_X_USERNAME']
-			: $_SERVER['PHP_AUTH_USER'];
-		$pass = (isset($_SERVER['HTTP_X_PASSWORD']))
-			? $_SERVER['HTTP_X_PASSWORD']
-			: $_SERVER['PHP_AUTH_PW'];
-		//echo $user; exit;
-		if (    $user != $this->settings['authentication']['id']
-			||  $pass != $this->settings['authentication']['key'])
+	/**
+	 * Logs in.
+	 *
+	 * @return boolean whether login is successful
+	 */
+	public function login() {
+		if ($this->_identity === null) {
+			$username  = (isset($_SERVER['HTTP_X_USERNAME']))
+				? $_SERVER['HTTP_X_USERNAME']
+				: $_SERVER['PHP_AUTH_USER'];
+			$password = (isset($_SERVER['HTTP_X_PASSWORD']))
+				? $_SERVER['HTTP_X_PASSWORD']
+				: $_SERVER['PHP_AUTH_PW'];
+
+			$this->_identity = new UserIdentity($username, $password);
+			$this->_identity->authenticate();
+		}
+		if ($this->_identity->errorCode === UserIdentity::ERROR_NONE) {
+			Yii::app()->user->login($this->_identity, 0);
+			return true;
+		} else
 			$this->sendResponse(
 				401,
 				Array(
-					'success'=>false,
-					'message'=>'Authentication error'
+					'success' => false,
+					'message' => 'Authentication error'
 				)
 			);
 	}
